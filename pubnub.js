@@ -1,10 +1,11 @@
 // Function for publishing
-function publishSampleMessage(c, t, d) {
+function publishSampleMessage(c, d, t, cmd) {
   var publishConfig = {
         channel: c,
         message: {
-            title: t,
-            description: d,
+            device: d,
+            type: t,
+            command: cmd,
           },
       };
 
@@ -88,15 +89,13 @@ pubnub.addListener({
       },
 
     message: function (msg) {
-        console.log(msg.message.title);
-        console.log(msg.message.description);
+        console.log(msg.message.device);
+        console.log(msg.message.type);
+        console.log(msg.message.command);
         $('#timeline_list').prepend(insertItem(now(),
-                            msg.message.title, msg.message.description, msg.message.description));
+                            'A message', msg.message.command, 'gray'));
       },
 
-    presence: function (presenceEvent) {
-        // handle presence
-      },
   });
 
 console.log('Subscribing to ' + channelName);
@@ -104,25 +103,30 @@ pubnub.subscribe({
     channels: [channelName],
   });
 
-if (testMode) {
-  // Insert the buttons
-  $('#form-area').append('<button id="test" class="btn btn--secondary">test</button>');
-  $('#form-area').append('<button id="clear" class="btn btn--negative">clear</button>');
+$('#test').on('click', function () {
+  publishSampleMessage(channelName, 'device', 'type', 'command');
+});
 
-  // Map the test button
-  $('#test').on('click', function () {
-    publishSampleMessage(channelName, 'oh wait', 'I am back');
-  });
+// Map the clear button
+$('#clear').on('click', function () {
+  $('#timeline_list').empty();
+});
 
-  // Map the clear button
-  $('#clear').on('click', function () {
-    $('#timeline_list').empty();
-  });
+// Possibly hide the test row
+if (!testMode) {
+  document.getElementById('test-row').style.display = 'none';
 }
 
 // Map the submit button
 $('#submit').on('click', function () {
-  publishSampleMessage(channelName, 'Command Sent',
-          document.getElementById('input-textarea-multiple').value);
-  document.getElementById('input-textarea-multiple').value = '';
+  publishSampleMessage(channelName,
+                       document.getElementById('input-device').value,
+                       document.getElementById('input-type').value,
+                       document.getElementById('input-command').value);
+  var msg = '<div>device: ' + document.getElementById('input-device').value + '</div>';
+  msg += '<div>type: ' + document.getElementById('input-type').value + '</div>';
+  msg += '<div>command: ' + document.getElementById('input-command').value + '</div>';
+  $('#timeline_list').prepend(insertItem(now(),
+                      'Command Sent', msg, 'gray'));
+  document.getElementById('input-command').value = '';
 });
