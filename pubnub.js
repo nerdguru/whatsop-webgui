@@ -65,8 +65,12 @@ function insertItem(timestamp, title, description, color) {
 function now() {
   var n = new Date();
   var retVal = '';
-  retVal = n.getFullYear() + '-' + (n.getMonth() + 1) + '-' + n.getDate();
-  retVal += ' ' + n.getHours() + ':' + n.getMinutes() + ':' + n.getSeconds();
+  retVal = n.getFullYear() + '-';
+  retVal += (n.getMonth() + 1).toLocaleString('en', { minimumIntegerDigits: 2 });
+  retVal += '-' + n.getDate().toLocaleString('en', { minimumIntegerDigits: 2 });
+  retVal += ' ' + n.getHours().toLocaleString('en', { minimumIntegerDigits: 2 });
+  retVal += ':' + n.getMinutes().toLocaleString('en', { minimumIntegerDigits: 2 });
+  retVal += ':' + n.getSeconds().toLocaleString('en', { minimumIntegerDigits: 2 });
   return retVal;
 }
 
