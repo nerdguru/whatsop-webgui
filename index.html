@@ -33,19 +33,19 @@
                       <div class="row">
                         <div class="col-md-2">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="form-area">
                             <div class="form-group">
                                 <div class="form-group__text">
                                     <textarea id="input-textarea-multiple" class="textarea" rows="5" placeholder="Enter command to send to device"></textarea>
                                 </div>
                             </div>
-                            <button id='submit' class="btn btn--primary">Send</button>
-                            <button id='test' class="btn btn--secondary">test</button>
+                            <button id="submit" class="btn btn--primary">Send</button>
+
                         </div>
                     </div>
 
                       <div class="timeline">
-                        <div class="timeline__list">
+                        <div class="timeline__list" id="timeline_list">
                             <div class="timeline__item">
                                 <div class="timeline__icon timeline--success"></div>
                                 <div class="timeline__time">2018-11-29 18:18:33</div>
@@ -103,8 +103,9 @@
 var channelName = '';
 var pubKey = '';
 var subKey = '';
+var testMode = false;
 </script>
-<script src="keys.js"></script>
+<script src="globals.js"></script>
 <script src="pubnub.js"></script>
     </body>
 </html>
