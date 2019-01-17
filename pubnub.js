@@ -87,7 +87,7 @@ pubnub.addListener({
         console.log(msg.message.title);
         console.log(msg.message.description);
         $('#timeline_list').prepend(insertItem(now(),
-                            msg.message.title, msg.message.description, 'red'));
+                            msg.message.title, msg.message.description, msg.message.description));
       },
 
     presence: function (presenceEvent) {
@@ -115,3 +115,10 @@ if (testMode) {
     $('#timeline_list').empty();
   });
 }
+
+// Map the submit button
+$('#submit').on('click', function () {
+  publishSampleMessage(channelName, 'Command Sent',
+          document.getElementById('input-textarea-multiple').value);
+  document.getElementById('input-textarea-multiple').value = '';
+});
