@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="locale" content="US">
+        <meta name="language" content="en">
+        <meta name="country" content="US">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Cisco WhatsOp Web UI</title>
+        <link rel="stylesheet" href="css/cui-standard.min.css">
+        <link rel="icon" type="image/vnd.microsoft.icon" href="//www.cisco.com/favicon.ico">
+        <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="///www.cisco.com/favicon.ico">
+    </head>
+    <body class="cui">
+        <div class="content-fluid">
+            <main>
+                <header class="header header--tall">
+                    <div class="header-bar container">
+                        <a href="javascript:;" class="header-bar__logo">
+                            <span class="icon-cisco"></span>
+                        </a>
+                        <div class="header-bar__main">
+                            <div class="header-heading">
+                                <h1 class="page-title">Cisco WhatsOp Web UI</h1>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group__text">
+                                    <textarea id="input-textarea-multiple" class="textarea" rows="5" placeholder="Enter command to send to device"></textarea>
+                                </div>
+                            </div>
+                            <button id='submit' class="btn btn--primary">Send</button>
+                            <button id='test' class="btn btn--secondary">test</button>
+                        </div>
+                    </div>
+
+                      <div class="timeline">
+                        <div class="timeline__list">
+                            <div class="timeline__item">
+                                <div class="timeline__icon timeline--success"></div>
+                                <div class="timeline__time">2018-11-29 18:18:33</div>
+                                <div class="timeline__content">
+                                    <div class="text-bold text-success">Command Response</div>
+                                    <div>Gteway of last resort is not set</div>
+                                    <div>10.0.0.0/32 is subnetted, 1 subnets</div>
+                                    <div>C 10.93.140.49 is directly connected, Loopback1</div>
+                                    <div>Updated using APIs by caller: IOSXE</div>
+                                </div>
+                            </div>
+                            <div class="timeline__item">
+                                <div class="timeline__icon"></div>
+                                <div class="timeline__time">2018-11-29 18:18:31</div>
+                                <div class="timeline__content">
+                                    <div class="text-bold">Command Received</div>
+                                    <div>Exec command received: sho ip route</div>
+                                    <div>Updated using APIs by caller: IOSXE</div>
+                                </div>
+                            </div>
+                            <div class="timeline__item">
+                                <div class="timeline__icon timeline--info"></div>
+                                <div class="timeline__time">2018-11-29 18:18:29</div>
+                                <div class="timeline__content">
+                                    <div class="text-bold text-blue">Command Sent</div>
+                                    <div>device: PDX-9300</div>
+                                    <div>config_type: exec </div>
+                                    <div>commands: sho ip route</div>
+                                </div>
+                            </div>
+                            <div class="timeline__item">
+                                <div class="timeline__icon timeline--danger"></div>
+                                <div class="timeline__time">2018-11-29 18:17:30</div>
+                                <div class="timeline__content">
+                                    <div class="text-bold text-danger">Issue</div>
+                                    <div>The device with the name: PDX-9300 has detected the loss of the route to DC</div>
+                                    <div>The default route is missing from the routing table</div>
+                                    <div>The device location is: Global/PDX/Floor 3</div>
+                                    <div>The device managementn IP address is 10.93.130.24</div>
+                                    <div>Created using APIs by caller: IOSXE</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+                <footer class="footer footer--basic">
+                </footer>
+            </main>
+        </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+<script>
+var channelName = '';
+var pubKey = '';
+var subKey = '';
+</script>
+<script src="keys.js"></script>
+<script src="pubnub.js"></script>
+    </body>
+</html>
