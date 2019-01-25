@@ -131,7 +131,7 @@ pubnubIn.addListener({
       },
 
     message: function (msg) {
-        console.log(msg.message);
+        console.log('Inbound message received: ' + JSON.stringify(msg.message, null, 2));
         $('#timeline_list').prepend(insertItem(now(),
                             msg.message.title, msg.message.message, msg.message.severity));
       },
@@ -144,8 +144,7 @@ pubnubIn.subscribe({
 
 // Test button mappings
 $('#test').on('click', function () {
-  fauxPublishResponse(pubnubIn,
-                      inChannelName,
+  fauxPublishResponse(inChannelName,
                       document.getElementById('input-title').value,
                       document.getElementById('input-message').value,
                       document.getElementById('input-severity').value);
