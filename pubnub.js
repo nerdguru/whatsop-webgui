@@ -43,6 +43,27 @@ function fauxPublishResponse(c, t, m, s) {
       });
 }
 
+// Function mapping severity to color
+function severity2color(severity) {
+  if (severity == 'primary') {
+    return 'blue';
+  }
+
+  if (severity == 'success') {
+    return 'green';
+  }
+
+  if (severity == 'danger') {
+    return 'red';
+  }
+
+  if (severity == 'warning') {
+    return 'yellow';
+  }
+
+  return 'gray';
+}
+
 // Function for icon color
 function iconColor(color) {
   if (color == 'green')
@@ -147,7 +168,7 @@ $('#test').on('click', function () {
   fauxPublishResponse(inChannelName,
                       document.getElementById('input-title').value,
                       document.getElementById('input-message').value,
-                      document.getElementById('input-severity').value);
+                      severity2color(document.getElementById('input-severity').value));
 });
 
 $('#clear').on('click', function () {
