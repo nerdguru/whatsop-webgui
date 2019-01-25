@@ -1,5 +1,17 @@
+// Set up the outbound channel connection
+pubnubOut = new PubNub({
+    publishKey: outPubKey,
+    subscribeKey: outSubKey,
+  });
+
+// Set up the inbound channel connection
+pubnubIn = new PubNub({
+    publishKey: inPubKey,
+    subscribeKey: inSubKey,
+  });
+
 // Function for publishing
-function publishSampleMessage(c, d, t, cmd) {
+function publishCommand(c, d, t, cmd) {
   var publishConfig = {
         channel: c,
         message: {
@@ -9,8 +21,25 @@ function publishSampleMessage(c, d, t, cmd) {
           },
       };
 
-  pubnub.publish(publishConfig, function (status, response) {
-        console.log(status, response);
+  pubnubOut.publish(publishConfig, function (status, response) {
+        console.log('Outbound status: ' + JSON.stringify(status, null, 2));
+        console.log('Outbound response: ' + JSON.stringify(response, null, 2));
+      });
+}
+
+function fauxPublishResponse(c, t, m, s) {
+  var publishConfig = {
+        channel: c,
+        message: {
+            title: t,
+            message: m,
+            severity: s,
+          },
+      };
+
+  pubnubIn.publish(publishConfig, function (status, response) {
+        console.log('Faux inbound status: ' + JSON.stringify(status, null, 2));
+        console.log('Faux inbound response: ' + JSON.stringify(response, null, 2));
       });
 }
 
@@ -75,39 +104,53 @@ function now() {
   return retVal;
 }
 
-// Set up the channel connection
-pubnub = new PubNub({
-    publishKey: pubKey,
-    subscribeKey: subKey,
-  });
-
-pubnub.addListener({
+// Outbound Channel Listeners
+pubnubOut.addListener({
     status: function (statusEvent) {
         if (statusEvent.category === 'PNConnectedCategory') {
-          console.log('Connected to ' + channelName);
+          console.log('Connected to ' + inChannelName);
         }
       },
 
     message: function (msg) {
-        console.log(msg.message.device);
-        console.log(msg.message.type);
-        console.log(msg.message.command);
-        $('#timeline_list').prepend(insertItem(now(),
-                            'A message', msg.message.command, 'gray'));
+        console.log('Outbound message confirmed: ' + JSON.stringify(msg.message, null, 2));
       },
 
   });
 
-console.log('Subscribing to ' + channelName);
-pubnub.subscribe({
-    channels: [channelName],
+pubnubOut.subscribe({
+    channels: [outChannelName],
   });
 
+// Inbound Channel Listeners
+pubnubIn.addListener({
+    status: function (statusEvent) {
+        if (statusEvent.category === 'PNConnectedCategory') {
+          console.log('Connected to ' + outChannelName);
+        }
+      },
+
+    message: function (msg) {
+        console.log(msg.message);
+        $('#timeline_list').prepend(insertItem(now(),
+                            msg.message.title, msg.message.message, msg.message.severity));
+      },
+
+  });
+
+pubnubIn.subscribe({
+    channels: [inChannelName],
+  });
+
+// Test button mappings
 $('#test').on('click', function () {
-  publishSampleMessage(channelName, 'device', 'type', 'command');
+  fauxPublishResponse(pubnubIn,
+                      inChannelName,
+                      document.getElementById('input-title').value,
+                      document.getElementById('input-message').value,
+                      document.getElementById('input-severity').value);
 });
 
-// Map the clear button
 $('#clear').on('click', function () {
   $('#timeline_list').empty();
 });
@@ -119,10 +162,10 @@ if (!testMode) {
 
 // Map the submit button
 $('#submit').on('click', function () {
-  publishSampleMessage(channelName,
-                       document.getElementById('input-device').value,
-                       document.getElementById('input-type').value,
-                       document.getElementById('input-command').value);
+  publishCommand(outChannelName,
+                 document.getElementById('input-device').value,
+                 document.getElementById('input-type').value,
+                 document.getElementById('input-command').value);
   var msg = '<div>device: ' + document.getElementById('input-device').value + '</div>';
   msg += '<div>type: ' + document.getElementById('input-type').value + '</div>';
   msg += '<div>command: ' + document.getElementById('input-command').value + '</div>';

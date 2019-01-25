@@ -77,16 +77,16 @@
                       <div class="col-md-2">
                           <div class="form-group">
                             <div class="form-group__text">
-                              <input id="input-seveirty" type="text">
-                              <label for="input-state-default">Severity</label>
+                              <textarea id="input-message" class="textarea" rows="5"></textarea>
+                              <label for="input-state-default">Message</label>
                             </div>
                           </div>
                       </div>
                       <div class="col-md-2">
                           <div class="form-group">
                             <div class="form-group__text">
-                              <textarea id="input-message" class="textarea" rows="5"></textarea>
-                              <label for="input-state-default">Message</label>
+                              <input id="input-severity" type="text">
+                              <label for="input-state-default">Severity</label>
                             </div>
                           </div>
                       </div>
@@ -113,9 +113,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
 <script>
-var channelName = '';
-var pubKey = '';
-var subKey = '';
+var outChannelName = '';
+var outPubKey = '';
+var outSubKey = '';
+var inChannelName = '';
+var inPubKey = '';
+var inSubKey = '';
 var testMode = false;
 </script>
 <script src="globals.js"></script>
